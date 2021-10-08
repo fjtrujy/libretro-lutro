@@ -196,7 +196,6 @@ else ifeq ($(platform),ps2)
 	CC = mips64r5900el-ps2-elf-gcc$(EXE_EXT)
 	CXX = mips64r5900el-ps2-elf-g++$(EXE_EXT)
 	AR = mips64r5900el-ps2-elf-ar$(EXE_EXT)
-	TARGET := $(TARGET_NAME)_libretro_$(platform).a
 	fpic := -fno-PIC
 	DEFINES := -G0 -DPS2 -DABGR -DHAVE_NO_LANGEXTRA -O3
 	LUA_MYCFLAGS := $(DEFINES) $(CFLAGS)
@@ -210,16 +209,11 @@ else ifeq ($(platform), psp1)
 	CC = psp-gcc$(EXE_EXT)
 	CXX = psp-g++$(EXE_EXT)
 	AR = psp-ar$(EXE_EXT)
-	DEFINES := -DPSP -G0 -DLSB_FIRST -DHAVE_ASPRINTF
-	CFLAGS += -march=allegrex -mfp32 -mgp32 -mlong32 -mabi=eabi
-	CFLAGS += -fomit-frame-pointer -fstrict-aliasing
-	CFLAGS += -falign-functions=32 -falign-loops -falign-labels -falign-jumps
-	CFLAGS += -I$(shell psp-config --pspsdk-path)/include
-	LDFLAGS += $(DEVKITPSP)psp/lib/libc.a $(DEVKITPSP)psp/sdk/lib/libpspkernel.a
+	fpic := -fno-PIC
+	DEFINES := -G0 -DPSP -O3
 	LUA_MYCFLAGS := $(DEFINES) $(CFLAGS)
 	STATIC_LINKING = 1
 	WANT_PHYSFS=0
-	MMD :=
 
 # Vita
 else ifeq ($(platform), vita)
